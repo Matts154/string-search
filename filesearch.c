@@ -28,7 +28,7 @@ int main (int argc, char *argv[]) {
 		
 		// Open the file
 		if( (fd = open(argv[i], O_RDONLY)) < 0 ) {
-			write(1, "Failed to open file", 19);
+			write(1, "Failed to open file\n", 20);
 			return 1;
 		}
 
@@ -36,9 +36,9 @@ int main (int argc, char *argv[]) {
 		while( read(fd, &buffer, len) > 0 ) {
 			int bufferIndex;
 
-			for(bufferIndex = 0; bufferIndex < len; bufferIndex++, charNum++) {
+			for( bufferIndex = 0; bufferIndex < len; bufferIndex++, charNum++ ) {
 				// If it's a newline character, increment lineNumber and reset character count
-				if( buffer[bufferIndex] == '\n') {
+				if( buffer[bufferIndex] == '\n' ) {
 					lineNumber++;
 					charNum = 0;
 				}
@@ -58,7 +58,7 @@ int main (int argc, char *argv[]) {
 				}
 			
 				// If match is true and searchPtr is equal to the end of the search string, then we've found a match. Print line number. Reset searchPtr to beginning of search string and set match to false.
-				if( match && searchPtr == (argv[2] - 1) ){
+				if( match && searchPtr == (argv[2] - 1) ) {
 					char message[100];
 					int messageLength = sprintf(message, "[%s]: Found '%s' at line %i, char %i\n", argv[i], argv[1], lineNumber, foundStartPos);
 					write(1, message, messageLength);
