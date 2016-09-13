@@ -8,7 +8,7 @@
 
 int main (int argc, char *argv[]) {
 	if( argc < 3 ) {
-		write(1, "Usage: search STRING FILE1 [FILE2 FILE3 ...]\n", 45);
+		printf("Usage: search STRING FILE1 [FILE2 FILE3 ...]\n");
 		return 0;
 	}
 
@@ -28,8 +28,8 @@ int main (int argc, char *argv[]) {
 		
 		// Open the file
 		if( (fd = open(argv[i], O_RDONLY)) < 0 ) {
-			write(1, "Failed to open file\n", 20);
-			return 1;
+			printf("Failed to open file '%s'\n", argv[i]);
+			continue;
 		}
 
 		// Fill the buffer while number of characters read is > 0
@@ -59,9 +59,7 @@ int main (int argc, char *argv[]) {
 			
 				// If match is true and searchPtr is equal to the end of the search string, then we've found a match. Print line number. Reset searchPtr to beginning of search string and set match to false.
 				if( match && searchPtr == (argv[2] - 1) ) {
-					char message[100];
-					int messageLength = sprintf(message, "[%s]: Found '%s' at line %i, char %i\n", argv[i], argv[1], lineNumber, foundStartPos);
-					write(1, message, messageLength);
+					printf(message, "[%s]: Found '%s' at line %i, char %i\n", argv[i], argv[1], lineNumber, foundStartPos);
 					match = 0;
 					searchPtr = argv[1];
 					foundStartPos = 0;
